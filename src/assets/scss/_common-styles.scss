@@ -1,0 +1,29 @@
+@import "_variables";
+@import "_fonts";
+
+// Common styles
+body {
+    background-color: #ffffff;
+}
+
+*,
+*:after,
+*:before {
+    outline: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+// Ensure cloacked Vue template elements are not visible
+[v-cloak] > * { 
+    display: none !important; 
+}
+
+// for some reason our css loader messes with vue-select package's css, when we are loading it with
+// import "vue-select/dist/vue-select.css"; and creates a border on the root element (only on production webpack build)
+:root {
+    border: 0 !important;
+}
