@@ -8,7 +8,7 @@
             <span>+371 2999999</span>
           </div>
           <div class="email item-wrapper">
-            <img src="@/assets/icons/message-solid-white.svg" alt="Email" class="icon"/> <!-- Replace with your email icon path -->
+            <img src="@/assets/icons/footer_email_ico.svg" alt="Email" class="icon"/> <!-- Replace with your email icon path -->
             <span>support@dispocars.com</span>
           </div>
         </div>
@@ -23,10 +23,11 @@
   </script>
   
   <style lang="scss" scoped>
+  @import "../assets/scss/common-styles";
   .footer {
     height: 100px;
-    background-color: #231e60; /* Replace with your desired background color */
-    color: #fff; /* Adjust text color for better visibility on your background */
+    background-color: $navy; /* Replace with your desired background color */
+    color: $white; /* Adjust text color for better visibility on your background */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -41,6 +42,8 @@
   .footer-title {
     margin: 0;
     padding-bottom: 10px;
+    font-size: 20px;
+    font-family: $font-family-bold;
   }
   
   .contact-info {
