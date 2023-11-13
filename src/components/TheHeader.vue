@@ -1,12 +1,14 @@
 <template>
     <header class="header">
       <div class="header-content">
-		<div class="logo"></div>
+		<div class="logo">
+			<img src="@/assets/images/dispo-travel-logo.png" alt="Dispo travel logo" class="logo" />
+		</div>
 		<nav>
 			<router-link to="/">Home</router-link> |
-			<router-link to="/">Book a ride</router-link> |
-			<router-link to="/">Transfers</router-link> |
-			<router-link to="/">Requests</router-link> |
+			<router-link to="/bookings">Book a ride</router-link> |
+			<router-link to="/transfers">Transfers</router-link> |
+			<router-link to="/requests">Requests</router-link> |
 			<router-link to="/tours">Tours</router-link>
 		</nav>
       </div>
@@ -27,7 +29,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	padding: 10px;
+	padding: 10px 40px;
 	position: -webkit-sticky; /* Required for Safari */
 	position: sticky;
 	top: 0; /* Set the top edge of the sticky header */
@@ -36,7 +38,9 @@
 }
 
 .header-content {
-	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
 }
 
 nav {
@@ -52,10 +56,9 @@ nav a.router-link-exact-active {
 	color: #42b983;
 }
 
-.icon {
-	margin-right: 8px; /* Space between icon and text */
-	width: 20px;
-	height: 20px;
+.logo {
+	widows: 230px;
+	height: 50px;
 }
 </style>
   

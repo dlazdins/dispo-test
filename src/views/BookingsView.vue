@@ -1,7 +1,7 @@
 <template>
-	<main class="home">
+	<main class="bookings">
 		<img alt="Vue logo" src="../assets/logo.png">
-		<HelloWorld msg="Welcome to Your Home Page"/>
+		<HelloWorld msg="Welcome to Your Bookings Page"/>
 	</main>
 </template>
 
@@ -10,7 +10,7 @@
 import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
-	name: 'HomeView',
+	name: 'BookingsView',
 
 	components: {
 		HelloWorld

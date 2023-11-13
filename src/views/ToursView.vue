@@ -74,16 +74,17 @@
 				<div class="grid-item item2">
 					<section class="overview">
 						<h3>Overview</h3>
-						<div class="booked-dates">7 March 2023 - 9 March 2023<span class="day-count color-secondary">(3 Days)</span></div>
+						<div class="booked-dates">{{ bookingDetails.dates }}<span class="day-count color-secondary">{{ bookingDetails.days }}</span></div>
 
 						<div class="overview-item passengers-info">
 							<img src="@/assets/icons/user-solid.svg" alt="Calendar icon" class="icon" />
-							<span>7 Passengers</span><span class="adult-count color-secondary">(5 adults)</span>
+							<span>{{ bookingDetails.passengers }}</span><span class="adult-count color-secondary">({{ bookingDetails.adults }})</span>
 						</div>
 						<div class="overview-item luggage-info">
 							<img src="@/assets/icons/suitcase-solid.svg" alt="Calendar icon" class="icon" />
-							<span>3 Large Suitcases</span>
+							<span>{{ bookingDetails.luggage }}</span>
 						</div>
+						<!-- Edit booking days -->
 						<div class="edit-booking-dates">
 							<div class="date-item">
 								<img src="@/assets/icons/calendar-days-solid.svg" alt="Calendar icon" class="icon" />
@@ -101,21 +102,23 @@
 								<img src="@/assets/icons/circle-xmark-solid.svg" alt="Close icon" class="close" />
 							</div>
 						</div>
+						<!-- Route info -->
 						<div class="route-info">
 							<div class="col-1">
-								<p class="departure-time">11:00</p>
+								<p class="departure-time">{{ bookingDetails.departureTime }}</p>
 							</div>
 							<div class="col-2">
 								<div class="departure">
 									<img src="@/assets/icons/point_marker.svg" alt="Point marker icon" class="icon" />
-									<span>Hamburg Airport, Flughafenstraße 3, 22335 Hamburg, Germany</span>
+									<span>{{ bookingDetails.pickUpAddress }}</span>
 								</div>
 								<div class="arrival">
 									<img src="@/assets/icons/point_marker_end.svg" alt="Point marker end icon" class="icon" />
-									<span>ibis Hamburg St Pauli Messe, Simon-von-Utrecht-Straße 63, 20359 Hamburg, Germany</span>
+									<span>{{ bookingDetails.destinationAddress }}</span>
 								</div>
 							</div>
 						</div>
+						<!-- Total travel time and distance -->
 						<div class="route-total">
 							<div class="total-distance">
 								<img src="@/assets/icons/route_distance_marker.svg" alt="Route distance icon" class="icon" />
@@ -128,29 +131,36 @@
 						</div>
 					</section>
 				</div>
+				<!-- Map -->
 				<div class="grid-item item3">
 					<section class="map-container">
 						<img v-if="supplier.mapUrl" :src="supplier.mapUrl" alt="Supplier" class="map" />
 						<div v-else class="map placeholder" />
 					</section>
 				</div>
+				<!-- Additional info -->
 				<div class="grid-item span-2-cols item4">
 					<section class="additional-info-container">
 						<div class="col-1">
 							<p>Additional information</p>
 							<div class="info-block">
 								<img src="@/assets/icons/triangle-exclamation-solid.svg" alt="Exclamation in triangle icon" class="icon" />
-								<span>2 Kid Seats</span>
+								<span>Need 2 Kid Seats</span>
 							</div>
 						</div>
-						<div class="col-2"></div>
-						<div class="arrival-time">
-							<span class="clock-icon">⏰</span>
-							<span class="time">11:15</span>
-						</div>
-						<div class="status">
-							<span class="status-text">SCHEDULED</span>
-							<span class="status-icon">📞</span>
+						<div class="col-2">
+							<div class="arrival-time">
+								<div class="time-title">Estimated time of arrival</div>
+								<img src="@/assets/icons/clock-solid.svg" alt="Exclamation in triangle icon" class="icon" />
+								<span class="time">{{ bookingDetails.estimatedTimeOfArrival }}</span>
+							</div>
+							<div class="drive-status">
+								<span class="status-title">Drive status</span>
+								<span class="status-text">{{ bookingDetails.driveStatus }}</span>
+							</div>
+							<div class="chat-button">
+								<img src="@/assets/icons/phone-volume-solid.svg" alt="Exclamation in triangle icon" class="icon" />
+							</div>
 						</div>
 					</section>
 				</div>
@@ -165,9 +175,7 @@
 export default {
 	name: 'BookingDetail',
 
-	components: {
-
-	},
+	components: {},
 
 	data() {
 		return {
@@ -184,15 +192,23 @@ export default {
 				arrivalTime: '11:00',
 				carRegistrationNr: 'HZ - 7221',
 				carBrand: 'Skoda Fabia',
-				carColor: 'Silver'
+				carColor: 'Silver',
 			},
 			bookingDetails: {
-				dates: '7 March 2023 - 9 March 2023 (3 Days)',
-				passengers: 7,
-				adults: 5,
-				suitcases: 3,
+				dates: '7 March 2023 - 9 March 2023',
+				days: '(3 Days)',
+				passengers: '7 persons',
+				adults: '5 adults',
+				luggage: '3 Large Suitcases',
+				departureTime: '11:00',
+				pickUpAddress: 'Hamburg Airport, Flughafenstraße 3, 22335 Hamburg, Germany',
+				destinationAddress: 'ibis Hamburg St Pauli Messe, Simon-von-Utrecht-Straße 63, 20359 Hamburg, Germany',
+				estimatedTimeOfArrival: '11:15',
+				driveStatus: 'SCHEDULED'
 			},
-			additionalInfo: 'Need 2 Kid Seats',
+			additionalInfo: {
+				items: 'Need 2 Kid Seats',
+			}
 		};
 	},
 };
@@ -214,6 +230,9 @@ export default {
 }
 
 .supplier-info {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 	text-align: left;
 }
 
@@ -287,8 +306,11 @@ export default {
 
 .car-details {
 	padding: 12px 12px;
-	margin-right: 12px;
+	margin: auto 12px 12px 0;
 	background-color: rgba(81,145,250,.05);
+	@media (min-width: 1300px) {
+		margin-bottom: 0;
+	}
 	
 	.arrival-details {
 		display: flex;
@@ -415,6 +437,7 @@ export default {
 			border: 1px solid rgba(81,145,250,0);
 			background-color: rgba(81,145,250,.05);
 			padding: 12px 12px;
+			font-size: 12px;
 			cursor: pointer;
 		}
 
@@ -429,14 +452,14 @@ export default {
 		}
 
 		.icon {
-			width: 20px;
+			width: 16px;
 			height: auto;
 			margin-right: 8px;
 		}
 
 		.close {
 			display: none;
-			width: 20px;
+			width: 16px;
 			height: auto;
 			margin-left: 8px;
 		}
@@ -505,6 +528,12 @@ export default {
 	width: 100%;
 	height: 100%;
 	min-height: 400px;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	@media (min-width: 1300px) {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
 
 	.map.placeholder {
 			background-image: url('@/assets/icons/no-car-image.png');
@@ -518,6 +547,10 @@ export default {
 
 .additional-info-container {
 	display: flex;
+	padding-bottom: 12px;
+	@media (min-width: 1300px) {
+		padding-bottom: 0;
+	}
 
 	.col-1,
 	.col-2 {
@@ -529,15 +562,73 @@ export default {
 		text-align: left;
 	}
 
+	.col-2 {
+		text-align: right;
+	}
+
+	.arrival-time {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+
+		.time-title {
+			margin-right: 12px;
+		}
+
+		.time {
+			font-family: $font-family-semibold;
+		}
+
+		.icon {
+			margin-right: 4px;
+		}
+	}
+
+	.drive-status {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+
+		.status-title {
+			font-size: 14px;
+			margin-right: 12px;
+		}
+
+		.status-text {
+			color: $sky-blue;
+			font-family: $font-family-semibold;
+		}
+	}
+
 	.info-block {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		flex-wrap: wrap;
+		margin-top: 12px;
 		padding: 24px;
-		background-color: palegoldenrod;
+		background-color: rgba(252, 240, 219, 0.6);
 		.icon {
 			width: 30px;
 			height: auto;
+			margin-right: 12px;
+		}
+	}
+
+	.chat-button {
+		display: flex;
+		align-items: center;
+		width: 74px;
+		height: auto;
+		padding: 12px 24px;
+		background-color: $leaf-green;
+		border-radius: 4px;
+		margin-top: 26px;
+		margin-left: auto;
+		cursor: pointer;
+
+		&:hover {
+			background-color: #00bf49;
 		}
 	}
 }
@@ -554,8 +645,6 @@ export default {
 }
 
 .grid-item {
-	//   background-color: #f0f0f0;
-	//   padding: 20px;
 	border-bottom: 1px solid #ccc;
 }
 
@@ -571,32 +660,8 @@ export default {
 	grid-row: 4; /* Position based on it being the fourth item */
 }
 
-// /* Medium screens (e.g., tablets) */
-// @media (min-width: 768px) {
-// 	.grid-container {
-// 		/* Now we have two columns */
-// 		grid-template-columns: 1fr 2fr; /* The second column is twice as wide as the first */
-// 		grid-template-rows: auto 1fr;
-// 	}
-
-// 	.item1 {
-// 		/* The first item will span all rows */
-// 		grid-row: 1 / -1;
-// 	}
-
-// 	.span-2-cols {
-// 		/* This will span the entire second column */
-// 		grid-column: 2;
-// 		grid-row: 2;
-// 	}
-
-// 	/* Adjust the positions of item2 and item3 for the two-column layout */
-// 	.item2 { grid-column: 2; grid-row: 1; }
-// 	.item3 { grid-column: 2; grid-row: 2; }
-// }
-
 /* Large screens (e.g., desktops) */
-@media (min-width: 1024px) {
+@media (min-width: 1300px) {
 	.grid-container {
 		/* Now we have three columns */
 		grid-template-columns: 1fr 1fr 1fr;

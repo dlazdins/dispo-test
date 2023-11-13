@@ -1,7 +1,7 @@
 <template>
-	<main class="home">
+	<main class="transfers">
 		<img alt="Vue logo" src="../assets/logo.png">
-		<HelloWorld msg="Welcome to Your Home Page"/>
+		<HelloWorld msg="Welcome to Your Transfers Page"/>
 	</main>
 </template>
 
@@ -10,7 +10,7 @@
 import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
-	name: 'HomeView',
+	name: 'TransfersView',
 
 	components: {
 		HelloWorld
